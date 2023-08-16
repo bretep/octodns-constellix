@@ -761,6 +761,8 @@ class ConstellixProvider(BaseProvider):
 
     def _is_healthcheck_configured(self, record):
         print("IS HEALTH CHECK?")
+        print(record)
+        print("IS HEALTH CHECK?1")
         print(record._octodns)
         print("IS HEALTH CHECK?2")
         print(record._octodns.get('constellix', {}))
