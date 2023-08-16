@@ -963,6 +963,10 @@ class ConstellixProvider(BaseProvider):
         pool_data, health_data = self._create_update_dynamic_healthchecks(
             record, pool_data
         )
+        print("POOL DATA:")
+        print(pool_data)
+        print("HEALTH DATA:")
+        print(health_data)
         pools = self._create_update_dynamic_pools(pool_data, health_data)
         # create ip filter rules
         rules = self._create_update_dynamic_rules(record)
@@ -1148,6 +1152,7 @@ class ConstellixProvider(BaseProvider):
                 continue
 
             if not self._is_healthcheck_configured(record):
+                print("HEALTH CHECK NOT CONFIGURED")
                 incompatible_pools = []
                 for name, pool in record.dynamic.pools.items():
                     if pool.data['fallback'] is not None:
@@ -1168,7 +1173,7 @@ class ConstellixProvider(BaseProvider):
                 for pool in record.dynamic.pools.values():
                     pool.data['fallback'] = None
                 desired.add_record(record, replace=True)
-
+            print("DONE CHECKING HEALTHCHECK")
         return super()._process_desired_zone(desired)
 
     def _apply(self, plan):
