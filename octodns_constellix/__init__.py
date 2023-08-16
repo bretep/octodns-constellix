@@ -786,6 +786,9 @@ class ConstellixProvider(BaseProvider):
         healthcheck = {}
         healthcheck["sonar_port"] = sonar_healthcheck.get('sonar_port', 80)
         healthcheck["sonar_type"] = sonar_healthcheck.get('sonar_type', "TCP")
+        healthcheck["sonar_fqdn"] = sonar_healthcheck.get('sonar_fqdn', "")
+        healthcheck["sonar_path"] = sonar_healthcheck.get('sonar_path', "")
+        healthcheck["sonar_monitor_interval_policy"] = sonar_healthcheck.get('sonar_monitor_interval_policy', "PARALLEL")
         healthcheck["sonar_regions"] = sonar_healthcheck.get(
             'sonar_regions', ["WORLD"]
         )
