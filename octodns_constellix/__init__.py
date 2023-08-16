@@ -516,9 +516,48 @@ class ConstellixProvider(BaseProvider):
         rules = []
 
         for record in records:
-            print(record)
+            # [
+            #     {
+            #         "id": 32987588,
+            #         "type": "A",
+            #         "recordType": "a",
+            #         "name": "rpc.v4.testnet",
+            #         "recordOption": "pools",
+            #         "noAnswer": False,
+            #         "disabled": False,
+            #         "note": "",
+            #         "ttl": 30,
+            #         "gtdRegion": 1,
+            #         "parentId": 1045714,
+            #         "parent": "domain",
+            #         "source": "Domain",
+            #         "modifiedTs": 1692206446700,
+            #         "modifiedTsDate": "2023-08-16T17:20:46Z",
+            #         "createdTs": "2023-08-16T17:21:02Z",
+            #         "value": [],
+            #         "roundRobin": [],
+            #         "geolocation": None,
+            #         "recordFailover": {
+            #             "disabled": False,
+            #             "failoverType": 1,
+            #             "failoverTypeStr": "Normal (always lowest level)",
+            #             "values": [],
+            #         },
+            #         "failover": {
+            #             "disabled": False,
+            #             "failoverType": 1,
+            #             "failoverTypeStr": "Normal (always lowest level)",
+            #             "values": [],
+            #         },
+            #         "roundRobinFailover": [],
+            #         "pools": [6006],
+            #         "poolsDetail": [{"id": 6006, "name": "NA-EAST-RPC"}],
+            #     }
+            # ]
+            print(record['recordOption'])
             if record['recordOption'] == 'pools':
                 pool_name = self._data_for_pool(_type, record, pools)
+                print(pool_name)
                 geofilter_id = 1
                 if (
                     'geolocation' in record.keys()
@@ -1020,6 +1059,8 @@ class ConstellixProvider(BaseProvider):
 
                 # Now we can create the rest of records.
                 for pool_name, pool in pools.items():
+                    print("POOL: ", pool_name)
+                    print(pool)
                     pool_params = {
                         'name': params['name'],
                         'ttl': params['ttl'],
