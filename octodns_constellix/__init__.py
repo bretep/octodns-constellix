@@ -700,6 +700,9 @@ class ConstellixProvider(BaseProvider):
         for name, types in values.items():
             for _type, records in types.items():
                 data_for = getattr(self, f'_data_for_{_type}')
+                print("DATA START")
+                print(data_for(_type, records))
+                print("DATA END")
                 record = Record.new(
                     zone,
                     name,
