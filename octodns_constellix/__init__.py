@@ -486,6 +486,7 @@ class ConstellixProvider(BaseProvider):
         self._zone_records = {}
 
     def _data_for_multiple(self, _type, records):
+        print(records)
         if 1 == len(records):
             record = records[0]
             return {
@@ -652,7 +653,7 @@ class ConstellixProvider(BaseProvider):
         record = records[0]
         return {'ttl': record['ttl'], 'type': _type, 'value': record['value']}
 
-    _data_for_CNAME = _data_for_single
+    _data_for_CNAME = _data_for_multiple
 
     def _data_for_SRV(self, _type, records):
         values = []
