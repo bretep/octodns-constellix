@@ -760,6 +760,14 @@ class ConstellixProvider(BaseProvider):
         return exists
 
     def _is_healthcheck_configured(self, record):
+        print("IS HEALTH CHECK?")
+        print(record._octodns)
+        print("IS HEALTH CHECK?2")
+        print(record._octodns.get('constellix', {}))
+        print("IS HEALTH CHECK?3")
+        print(record._octodns.get('constellix', {}).get(
+            'healthcheck', None
+        ))
         sonar_healthcheck = record._octodns.get('constellix', {}).get(
             'healthcheck', None
         )
