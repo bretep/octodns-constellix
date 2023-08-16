@@ -896,6 +896,8 @@ class ConstellixProvider(BaseProvider):
         for pool_name, pool in pool_data.items():
             for value in pool['values']:
                 check_name = '{}-{}'.format(pool_name, value['value'])
+                print("HEALTHCHECK DATA:::")
+                print(healthcheck)
                 check_obj = self._create_update_check(
                     pool_type=record._type,
                     check_name=check_name,
