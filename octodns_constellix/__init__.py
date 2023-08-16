@@ -901,6 +901,9 @@ class ConstellixProvider(BaseProvider):
                     check_name=check_name,
                     check_type=healthcheck['sonar_type'].lower(),
                     value=value['value'],
+                    fqdn=value['sonar_fqdn'],
+                    path=value['sonar_path'],
+                    monitor_interval_policy=value['sonar_monitor_interval_policy'],
                     port=healthcheck['sonar_port'],
                     interval=healthcheck['sonar_interval'],
                     sites=check_sites,
@@ -975,11 +978,14 @@ class ConstellixProvider(BaseProvider):
         return rules, pools
 
     def _create_update_check(
-        self, pool_type, check_name, check_type, value, port, interval, sites
+        self, pool_type, check_name, check_type, value, fqdn, path, monitor_interval_policy, port, interval, sites
     ):
         check = {
             'name': check_name,
             'host': value,
+            'fqdn': fqdn,
+            'path': path,
+            'monitorIntervalPolicy': monitor_interval_policy,
             'port': port,
             'checkSites': sites,
             'interval': interval,
@@ -990,6 +996,9 @@ class ConstellixProvider(BaseProvider):
             check['ipVersion'] = "IPV4"
 
         if check_type == "http":
+            check['protocolType'] = "HTTP"
+
+        if check_type == "https":
             check['protocolType'] = "HTTPS"
 
         existing_check = self._sonar.check(check_type, check_name)
