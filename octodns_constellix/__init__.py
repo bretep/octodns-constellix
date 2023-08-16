@@ -515,6 +515,7 @@ class ConstellixProvider(BaseProvider):
         rules = []
 
         for record in records:
+            print(record)
             if record['recordOption'] == 'pools':
                 pool_name = self._data_for_pool(_type, record, pools)
                 geofilter_id = 1
