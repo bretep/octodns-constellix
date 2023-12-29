@@ -425,16 +425,32 @@ class SonarClient(object):
         return data
 
     def check_delete(self, check_id):
-        # first get check type
-        path = f'/check/type/{check_id}'
-        data = self._request('GET', path).json()
-        check_type = data['type'].lower()
+        try:
+            # First get check type
+            path = f'/check/type/{check_id}'
+            data = self._request('GET', path).json()
+            check_type = data['type'].lower()
 
-        path = f'/{check_type}/{check_id}'
-        self._request('DELETE', path)
+            # Perform the delete operation
+            path = f'/{check_type}/{check_id}'
+            self._request('DELETE', path)
 
-        # Update our cache
-        self._checks[check_type].pop(check_id, None)
+            # Update our cache
+            self._checks[check_type].pop(check_id, None)
+
+            # Update our cache
+            self._checks[check_type].pop(check_id, None)
+
+        except SonarClientNotFound:
+            # Handle only the "Not Found" exception as a warning
+            print(f"Warning: Check with ID {check_id} not found. It may have already been deleted.")
+
+        except Exception as e:
+            # Handle other exceptions normally
+            raise e
+
+
+
 
 
 class ConstellixProvider(BaseProvider):
